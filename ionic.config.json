@@ -1,0 +1,7 @@
+{
+  "name": "linkMe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

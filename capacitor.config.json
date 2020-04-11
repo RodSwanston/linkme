@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "linkMe",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
