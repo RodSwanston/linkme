@@ -1,26 +1,129 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab2.css';
+import React from 'react'
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonText,
+  IonSearchbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonAvatar,
+  IonButtons,
+  IonButton
+} from '@ionic/react'
+
+import './Tab2.css'
 
 const Tab2: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>
+            Connections
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
+
+      <IonContent fullscreen>
+        <IonSearchbar />
+
+        <IonToolbar >
+          <IonTitle>
+            Requests {' '}
+            <IonText color="primary">3</IonText>
+          </IonTitle>
+        </IonToolbar>
+        <IonList>
+          <IonItem button>
+            <IonAvatar className="avatar-big" slot="start">
+              <img src="https://picsum.photos/200" alt="connection" draggable={false} />
+            </IonAvatar>
+            <IonLabel>
+              <h2>Finn</h2>
+              <h3>I'm a big deal</h3>
+              <p>Link: Confirm First</p>
+              <IonButtons slot="end">
+                <IonButton fill="solid" size="small" color="primary">
+                  Confirm
+                </IonButton>
+                <IonButton fill="solid" size="small">
+                  Delete
+                </IonButton>
+              </IonButtons>
+            </IonLabel>
+          </IonItem>
+          <IonItem button>
+            <IonAvatar className="avatar-big" slot="start">
+              <img src="https://picsum.photos/200" alt="connection" draggable={false} />
+            </IonAvatar>
+            <IonLabel>
+              <h2>Finn</h2>
+              <h3>I'm a big deal</h3>
+              <p>Link: Confirm First</p>
+              <IonButtons slot="end">
+                <IonButton fill="solid" size="small" color="primary">
+                  Confirm
+                </IonButton>
+                <IonButton fill="solid" size="small">
+                  Delete
+                </IonButton>
+              </IonButtons>
+            </IonLabel>
+          </IonItem>
+          <IonItem button>
+            <IonAvatar className="avatar-big" slot="start">
+              <img src="https://picsum.photos/200" alt="connection" draggable={false} />
+            </IonAvatar>
+            <IonLabel>
+              <h2>Finn</h2>
+              <h3>I'm a big deal</h3>
+              <p>Link: Confirm First</p>
+              <IonButtons slot="end">
+                <IonButton fill="solid" size="small" color="primary">
+                  Confirm
+                </IonButton>
+                <IonButton fill="solid" size="small">
+                  Delete
+                </IonButton>
+              </IonButtons>
+            </IonLabel>
+          </IonItem>
+        </IonList>
+
+        <IonToolbar>
+          <IonTitle>
+            Connected
+          </IonTitle>
+        </IonToolbar>
+        <IonList>
+          <IonItem button>
+            <IonAvatar className="avatar-big" slot="start">
+              <img src="https://picsum.photos/200" alt="connection" draggable={false} />
+            </IonAvatar>
+            <IonLabel>
+              <h2>Finn</h2>
+              <h3>I'm a big deal</h3>
+              <p>Link: Standar QR</p>
+            </IonLabel>
+          </IonItem>
+          <IonItem button>
+            <IonAvatar className="avatar-big" slot="start">
+              <img src="https://picsum.photos/200" alt="connection" draggable={false} />
+            </IonAvatar>
+            <IonLabel>
+              <h2>Finn</h2>
+              <h3>I'm a big deal</h3>
+              <p>Link: Standar QR</p>
+            </IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default Tab2;
+export default Tab2
