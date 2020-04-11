@@ -15,11 +15,11 @@ import {
 } from '@ionic/react'
 import { giftOutline, createOutline } from 'ionicons/icons'
 
-import Logo from '../assets/logo.png'
-import QRImage from '../assets/qr-test.png'
-import './Tab1.css'
+import Logo from '../../assets/logo.png'
+import QRImage from '../../assets/qr-test.png'
+import './Home.css'
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -81,4 +81,4 @@ const Tab1: React.FC = () => {
   )
 }
 
-export default Tab1
+export default Home

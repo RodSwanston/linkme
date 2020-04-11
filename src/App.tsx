@@ -1,24 +1,26 @@
-import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import React, { lazy } from 'react'
+import { IonReactRouter } from '@ionic/react-router'
 import {
   IonApp,
-  IonIcon,
   IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
   IonTabs,
+  IonTabBar,
+  IonIcon,
+  IonTabButton,
   IonAvatar,
-  IonBadge
 } from '@ionic/react'
-import { IonReactRouter } from '@ionic/react-router'
-import { homeOutline, bookOutline, scanOutline, searchOutline } from 'ionicons/icons'
+import {
+  homeOutline,
+  bookOutline,
+  scanOutline,
+  searchOutline
+} from 'ionicons/icons'
 
-import Tab1 from './pages/Tab1'
-import Tab2 from './pages/Tab2'
-import Tab3 from './pages/Tab3'
-import Tab4 from './pages/Tab4'
-import Tab5 from './pages/Tab5'
-import Tab6 from './pages/Tab6'
+import { useAuth } from './components/AuthProvider'
+
+import { AuthProvider } from './components/AuthProvider'
+import { LazySuspense } from './components/LazySuspense'
+import { RouteView } from './components/RouteView'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -40,6 +42,13 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './theme/global.css'
 
+const Login = lazy(() => import('./pages/login/login'))
+const Home = lazy(() => import('./pages/home/Home'))
+const Connections = lazy(() => import('./pages/connections/Connections'))
+const Scan = lazy(() => import('./pages/scan/Scan'))
+const Search = lazy(() => import('./pages/search/Search'))
+const Profile = lazy(() => import('./pages/profile/Profile'))
+
 const avatarStyle = {
   height: 30,
   width: 30,
@@ -47,44 +56,58 @@ const avatarStyle = {
   border: 'solid 1px'
 }
 
-const App: React.FC = () => (
-  <IonApp>
+function AppRouter() {
+  const { token } = useAuth()
+
+  return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/home" component={Tab1} exact={true} />
-          <Route path="/connections" component={Tab2} exact={true} />
-          <Route path="/scan" component={Tab3} exact={true} />
-          <Route path="/search" component={Tab4} exact={true} />
-          <Route path="/profile" component={Tab5} exact={true} />
-          <Route path="/login" component={Tab6} exact={true} />
-          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
+          <RouteView isPrivate={false} path="/" component={Login} exact={true} />
+          <RouteView path="/home" component={Home} exact={true} />
+          <RouteView path="/connections" component={Connections} exact={true} />
+          <RouteView path="/scan" component={Scan} exact={true} />
+          <RouteView path="/search" component={Search} exact={true} />
+          <RouteView path="/profile" component={Profile} exact={true} />
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={homeOutline} />
-          </IonTabButton>
-          <IonTabButton tab="connections" href="/connections">
-            <IonIcon icon={bookOutline} />
-            <IonBadge color="primary">3</IonBadge>
-          </IonTabButton>
-          <IonTabButton tab="scan" href="/scan">
-            <IonIcon icon={scanOutline} />
-          </IonTabButton>
-          <IonTabButton tab="search" href="/search">
-            <IonIcon icon={searchOutline} />
-          </IonTabButton>
-          <IonTabButton tab="login" href="/login">
-            <IonIcon icon={searchOutline} />
-          </IonTabButton>
-          <IonTabButton tab="profile" href="/profile">
-            <IonAvatar style={avatarStyle}>
-              <img alt="user" src="https://picsum.photos/100" draggable={false} />
-            </IonAvatar>
-          </IonTabButton>
-        </IonTabBar>
+        
+        {!token
+          ? (<IonTabBar slot="bottom" />)
+          : (
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={homeOutline} />
+                </IonTabButton>
+                <IonTabButton tab="connections" href="/connections">
+                  <IonIcon icon={bookOutline} />
+                  {/*<IonBadge color="primary">3</IonBadge>*/}
+                </IonTabButton>
+                <IonTabButton tab="scan" href="/scan">
+                  <IonIcon icon={scanOutline} />
+                </IonTabButton>
+                <IonTabButton tab="search" href="/search">
+                  <IonIcon icon={searchOutline} />
+                </IonTabButton>
+                <IonTabButton tab="profile" href="/profile">
+                  <IonAvatar style={avatarStyle}>
+                    <img alt="user" src="https://picsum.photos/100" draggable={false} />
+                  </IonAvatar>
+                </IonTabButton>
+              </IonTabBar>
+          )
+        }
       </IonTabs>
     </IonReactRouter>
+  )
+}
+
+const App: React.FC = () => (
+  <IonApp>
+    <AuthProvider>
+      <LazySuspense>
+        <AppRouter />
+      </LazySuspense>
+    </AuthProvider>
   </IonApp>
 )
 

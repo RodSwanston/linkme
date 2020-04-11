@@ -131,7 +131,7 @@ const linkIcons = [
   }
 ]
 
-const Tab5: React.FC = () => {
+const Profile: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -185,4 +185,4 @@ const Tab5: React.FC = () => {
   )
 }
 
-export default Tab5
+export default Profile

@@ -4,10 +4,10 @@ import {
   IonPage
 } from '@ionic/react'
 
-import Logo from '../assets/logo.png'
-import './Tab6.css'
+import Logo from '../../assets/logo.png'
+import './login.css'
 
-const Tab6: React.FC = () => {
+const Login: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
@@ -30,10 +30,9 @@ const Tab6: React.FC = () => {
             </div>
           </div>
         </div>
-
       </IonContent>
     </IonPage>
   )
 }
 
-export default Tab6
+export default Login

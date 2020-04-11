@@ -12,7 +12,7 @@ import {
   IonAvatar,
 } from '@ionic/react'
 
-const Tab4: React.FC = () => {
+const Search: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -51,4 +51,4 @@ const Tab4: React.FC = () => {
   )
 }
 
-export default Tab4
+export default Search
