@@ -13,11 +13,11 @@ interface RouteViewProps {
 }
 
 function PublicView({ location, component: Component, ...props }: RouteViewProps) {
-  const { token } = useAuth()
+  const { user } = useAuth()
   const from = (location.state || ({} as any)).form || null
 
-  if (token) {
-    return <Redirect to={from || '/404'} />
+  if (user.uid) {
+    return <Redirect to={from || '/home'} />
   }
 
   return (
@@ -30,9 +30,9 @@ function PublicView({ location, component: Component, ...props }: RouteViewProps
 }
 
 function PrivateView({ location, component: Component, ...props }: RouteViewProps) {
-  const { token } = useAuth()
+  const { user } = useAuth()
   
-  if (!token) {
+  if (!user.uid) {
     return <Redirect to="/" />
   }
 

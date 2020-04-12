@@ -16,16 +16,21 @@ import firebase from '../../utils/firebaseConfig'
 import Logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 
-const Login: React.FC = () => {
+const Singup: React.FC = () => {
   const { setUser } = useAuth()
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
 
-  const signin = async (e: any) => {
+  const signup = async (e: any) => {
     e.preventDefault()
+    if (password !== password2) {
+      setError('Wrong Password')
+      return
+    }
     try {
-      const res = await firebase.auth().signInWithEmailAndPassword(email, password)
+      const res = await firebase.auth().createUserWithEmailAndPassword(email, password)
       setUser(res.user || {})
     } catch (error) {
       setError(error.message || error)
@@ -44,7 +49,7 @@ const Login: React.FC = () => {
           <strong>LinkMe</strong>
           <br/>
           <br/>
-          <form onSubmit={signin} style={{ display: 'flex', flexDirection: 'column', placeItems: 'center', placeContent: 'center' }}>
+          <form onSubmit={signup} style={{ display: 'flex', flexDirection: 'column', placeItems: 'center', placeContent: 'center' }}>
             <IonList style={{ width: '70%', borderRadius: 4 }}>
               <IonItem>
                 <IonLabel position="floating">Email</IonLabel>
@@ -66,14 +71,24 @@ const Login: React.FC = () => {
                   onIonChange={e => setPassword(e.detail.value!)}
                 />
               </IonItem>
+              <IonItem>
+                <IonLabel position="floating">Confirm Password</IonLabel>
+                <IonInput
+                  required
+                  color="primary"
+                  type="password"
+                  value={password2}
+                  onIonChange={e => setPassword2(e.detail.value!)}
+                />
+              </IonItem>
             </IonList>
             <div style={{ height: 20 }} />
             <IonButton type="submit" style={{ width: '70%' }} expand="block" color="primary">
-              Singin
+              Singup
             </IonButton>
-            <Link to="/singup" style={{ width: '70%' }}>
+            <Link to="/" style={{ width: '70%' }}>
               <IonButton type="button" style={{ width: '100%' }} fill="clear" color="primary">
-                Singup
+                Singin
               </IonButton>
             </Link>
           </form>
@@ -90,4 +105,4 @@ const Login: React.FC = () => {
   )
 }
 
-export default Login
+export default Singup

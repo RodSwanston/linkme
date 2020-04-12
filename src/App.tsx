@@ -43,6 +43,7 @@ import './theme/variables.css'
 import './theme/global.css'
 
 const Login = lazy(() => import('./pages/login/login'))
+const Singup = lazy(() => import('./pages/singup/Singup'))
 const Home = lazy(() => import('./pages/home/Home'))
 const Connections = lazy(() => import('./pages/connections/Connections'))
 const Scan = lazy(() => import('./pages/scan/Scan'))
@@ -57,13 +58,14 @@ const avatarStyle = {
 }
 
 function AppRouter() {
-  const { token } = useAuth()
+  const { user } = useAuth()
 
   return (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
           <RouteView isPrivate={false} path="/" component={Login} exact={true} />
+          <RouteView isPrivate={false} path="/singup" component={Singup} exact={true} />
           <RouteView path="/home" component={Home} exact={true} />
           <RouteView path="/connections" component={Connections} exact={true} />
           <RouteView path="/scan" component={Scan} exact={true} />
@@ -71,31 +73,26 @@ function AppRouter() {
           <RouteView path="/profile" component={Profile} exact={true} />
         </IonRouterOutlet>
         
-        {!token
-          ? (<IonTabBar slot="bottom" />)
-          : (
-              <IonTabBar slot="bottom">
-                <IonTabButton tab="home" href="/home">
-                  <IonIcon icon={homeOutline} />
-                </IonTabButton>
-                <IonTabButton tab="connections" href="/connections">
-                  <IonIcon icon={bookOutline} />
-                  {/*<IonBadge color="primary">3</IonBadge>*/}
-                </IonTabButton>
-                <IonTabButton tab="scan" href="/scan">
-                  <IonIcon icon={scanOutline} />
-                </IonTabButton>
-                <IonTabButton tab="search" href="/search">
-                  <IonIcon icon={searchOutline} />
-                </IonTabButton>
-                <IonTabButton tab="profile" href="/profile">
-                  <IonAvatar style={avatarStyle}>
-                    <img alt="user" src="https://picsum.photos/100" draggable={false} />
-                  </IonAvatar>
-                </IonTabButton>
-              </IonTabBar>
-          )
-        }
+        <IonTabBar slot="bottom">
+          <IonTabButton hidden={!user.uid} tab="home" href="/home">
+            <IonIcon icon={homeOutline} />
+          </IonTabButton>
+          <IonTabButton hidden={!user.uid} tab="connections" href="/connections">
+            <IonIcon icon={bookOutline} />
+            {/*<IonBadge color="primary">3</IonBadge>*/}
+          </IonTabButton>
+          <IonTabButton hidden={!user.uid} tab="scan" href="/scan">
+            <IonIcon icon={scanOutline} />
+          </IonTabButton>
+          <IonTabButton hidden={!user.uid} tab="search" href="/search">
+            <IonIcon icon={searchOutline} />
+          </IonTabButton>
+          <IonTabButton hidden={!user.uid} tab="profile" href="/profile">
+            <IonAvatar style={avatarStyle}>
+              <img alt="user" src="https://picsum.photos/100" draggable={false} />
+            </IonAvatar>
+          </IonTabButton>
+        </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   )

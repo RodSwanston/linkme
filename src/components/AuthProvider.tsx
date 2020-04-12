@@ -3,9 +3,7 @@ import React, {
   ReactNode,
   useEffect,
   createContext,
-  useContext,
-  Dispatch,
-  SetStateAction
+  useContext
 } from 'react'
 
 import { Loading } from './Loading'
@@ -17,26 +15,20 @@ interface AuthProviderProps {
 }
 
 export interface AuthState {
-  token: any
   user: any
-  getToken: () => any
   getUser: () => any
 }
 
 export interface AuthContextType extends AuthState {
   hasPermission: (permissions: string) => boolean
   logOut: () => void
-  setToken: Dispatch<SetStateAction<string>>
-  setUser: Dispatch<SetStateAction<any>>
+  setUser: Function
 }
 
 const authInitialState: AuthContextType = {
-  token: '',
   user: {},
-  getToken: async () => await storage.getItem('token') || '',
   getUser: async () => await storage.getItem('user') || {},
   logOut: () => null,
-  setToken: () => null,
   setUser: () => null,
   hasPermission: () => false
 }
@@ -47,22 +39,16 @@ export const useAuth = () => useContext(authContext)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState({})
-  const [token, setToken] = useState('')
-
-  useEffect(() => {
-    storage.setItem('token', token)
-    storage.setItem('user', user)
-  }, [token, user])
+  const [user, setUserState] = useState({})
 
   useEffect(() => {
     if (!loading) return
-
+    
     async function getInitialState() {
-      const token = await authInitialState.getToken()
-      const user = await authInitialState.getUser()
-      setToken(token)
-      setUser(user)
+      const userData = await authInitialState.getUser()
+      console.log(2, userData)
+      setUserState(userData)
+      storage.setItem('user', userData)
       setLoading(false)
     }
 
@@ -70,18 +56,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [loading])
 
   const logOut = () => {
-    setUser({})
-    setToken('')
+    setUserState({})
     storage.clear()
+  }
+
+  const setUser = (user: any) => {
+    setUserState(user)
+    storage.setItem('user', user)
   }
 
   const value = {
     ...authInitialState,
     logOut,
     user,
-    setUser,
-    token,
-    setToken
+    setUser
   }
 
   if (loading) return <Loading />
